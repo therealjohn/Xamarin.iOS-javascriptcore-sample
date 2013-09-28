@@ -24,8 +24,23 @@ namespace JavascriptExample
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
+			// Example 1
 			JSContext context = new JSContext ();
 			JSValue result = context.EvaluateScript ("2 + 2");
+			Console.WriteLine (result);
+
+			// Example 2
+			context.EvaluateScript ("var square = function (x) { return x * x; }");
+			JSValue function = context [(NSString)"square"];
+			JSValue input = JSValue.From (3, context);
+			result = function.Call (input);
+			Console.WriteLine (result);
+
+			// Example 3
+			JSValue value = context.EvaluateScript ("a = 3");
+			context.EvaluateScript ("var square = function (x) { return x * x; }");
+			function = context [(NSString)"square"];
+			result = function.Call (context [(NSString) "a"]);
 			Console.WriteLine (result);
 
 			// create a new window instance based on the screen size
